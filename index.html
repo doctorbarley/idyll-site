@@ -30,7 +30,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;paddi
 .lede{font-size:21px;font-weight:300;color:var(--ink-body);margin-top:18px;max-width:30ch}
 .lede b{font-weight:500;color:var(--ink)}
 form.capture{margin-top:30px;display:flex;flex-wrap:wrap;gap:10px;max-width:480px}
-form.capture label{position:absolute;left:-9999px}
+form.capture label.sr{position:absolute;left:-9999px}
 form.capture input{flex:1 1 220px;min-width:0;font:inherit;font-size:16px;padding:14px 18px;border-radius:999px;border:1.5px solid var(--oat-deep);background:var(--card);color:var(--ink)}
 form.capture input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
 .btn{font:inherit;font-size:16px;font-weight:600;padding:14px 24px;border-radius:999px;border:0;background:var(--accent);color:#fff;cursor:pointer;white-space:nowrap}
@@ -82,18 +82,18 @@ form.capture input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 
 .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#C8A590,#8F6A58)}
 
 /* waitlist options */
-.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center}
-.opts .lbl{font-size:13px;color:var(--ink-2);margin-right:4px;flex-basis:100%}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center;flex-basis:100%}
+.opts .lbl{font-size:13px;color:var(--ink-2);margin-right:4px}
 .opt{position:relative}
 .opt input{position:absolute;opacity:0;width:0;height:0}
 .opt span{display:inline-block;padding:9px 14px;border-radius:999px;border:1.5px solid var(--oat-deep);background:var(--card);color:var(--ink-body);font-size:14px;cursor:pointer;min-height:40px;line-height:20px}
 .opt input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}
 .opt input:focus-visible+span{box-shadow:0 0 0 4px var(--accent-soft)}
-.age{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px;color:var(--ink-body);flex-basis:100%}
+.age{display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:14px;color:var(--ink-body);flex-basis:100%}
 .age input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--accent);flex:none}
 .again .opts,.again .age{justify-content:center}
 
-.phone-field{flex-basis:100%;display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.phone-field{flex-basis:100%;display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .phone-field input{flex:1 1 220px;min-width:0;font:inherit;font-size:16px;padding:14px 18px;border-radius:999px;border:1.5px solid var(--oat-deep);background:var(--card);color:var(--ink)}
 .phone-field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
 .sms{display:flex;gap:10px;align-items:flex-start;margin-top:10px;font-size:13px;color:var(--ink-2);flex-basis:100%;text-align:left}
@@ -148,10 +148,10 @@ footer a{text-decoration:none}footer a:hover{color:var(--accent)}
     <h1>The date <em>comes first.</em></h1>
     <p class="lede">Post a date, not a profile. Someone nearby requests to join, you pick, and <b>then</b> you meet the person. Launching in New York City.</p>
     <form class="capture" id="capture-top" method="POST" action="/subscribe">
-      <label for="email-top">Email</label>
+      <label class="sr" for="email-top">Email</label>
       <input id="email-top" name="email" type="email" autocomplete="email" placeholder="you@email.com">
       <button class="btn" type="submit">Join the NYC waitlist</button>
-<p class="fine" style="flex-basis:100%;margin-top:6px">Give us an email, a mobile number, or both.</p><div class="opts"><span class="lbl">I am (optional)</span><label class="opt"><input type="radio" name="gender" value="woman"><span>Woman</span></label><label class="opt"><input type="radio" name="gender" value="man"><span>Man</span></label><label class="opt"><input type="radio" name="gender" value="nonbinary"><span>Non-binary</span></label></div><div class="opts"><span class="lbl">Borough (optional)</span><label class="opt"><input type="radio" name="borough" value="manhattan"><span>Manhattan</span></label><label class="opt"><input type="radio" name="borough" value="brooklyn"><span>Brooklyn</span></label><label class="opt"><input type="radio" name="borough" value="queens"><span>Queens</span></label><label class="opt"><input type="radio" name="borough" value="bronx"><span>Bronx</span></label><label class="opt"><input type="radio" name="borough" value="staten"><span>Staten Island</span></label></div><div class="phone-field"><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="Mobile number" aria-label="Mobile number"></div><label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Dating LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>. <em>[Consent wording pending attorney review.]</em></span></label>
+<div class="opts"><span class="lbl">I am</span><label class="opt"><input type="radio" name="gender" value="woman"><span>Woman</span></label><label class="opt"><input type="radio" name="gender" value="man"><span>Man</span></label><label class="opt"><input type="radio" name="gender" value="nonbinary"><span>Non-binary</span></label></div><div class="phone-field"><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="Mobile number" aria-label="Mobile number"></div><label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Dating LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>. <em>[Consent wording pending attorney review.]</em></span></label>
 <label class="age"><input type="checkbox" name="age18" value="yes" required> I am 18 or older.</label>
     </form>
     <p class="fine">First month of Idyll+ free for everyone at launch. iPhone only. 18+.</p>
@@ -255,10 +255,10 @@ footer a{text-decoration:none}footer a:hover{color:var(--accent)}
   <p class="eyebrow">Launching in New York City</p>
   <h2>Meet the plan before the person.</h2>
   <form class="capture" id="capture-bottom" method="POST" action="/subscribe">
-    <label for="email-bottom">Email</label>
+    <label class="sr" for="email-bottom">Email</label>
     <input id="email-bottom" name="email" type="email" autocomplete="email" placeholder="you@email.com">
     <button class="btn" type="submit">Join the NYC waitlist</button>
-<p class="fine" style="flex-basis:100%;margin-top:6px">Give us an email, a mobile number, or both.</p><div class="opts"><span class="lbl">I am (optional)</span><label class="opt"><input type="radio" name="gender" value="woman"><span>Woman</span></label><label class="opt"><input type="radio" name="gender" value="man"><span>Man</span></label><label class="opt"><input type="radio" name="gender" value="nonbinary"><span>Non-binary</span></label></div><div class="opts"><span class="lbl">Borough (optional)</span><label class="opt"><input type="radio" name="borough" value="manhattan"><span>Manhattan</span></label><label class="opt"><input type="radio" name="borough" value="brooklyn"><span>Brooklyn</span></label><label class="opt"><input type="radio" name="borough" value="queens"><span>Queens</span></label><label class="opt"><input type="radio" name="borough" value="bronx"><span>Bronx</span></label><label class="opt"><input type="radio" name="borough" value="staten"><span>Staten Island</span></label></div><div class="phone-field"><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="Mobile number" aria-label="Mobile number"></div><label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Dating LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>. <em>[Consent wording pending attorney review.]</em></span></label>
+<div class="opts"><span class="lbl">I am</span><label class="opt"><input type="radio" name="gender" value="woman"><span>Woman</span></label><label class="opt"><input type="radio" name="gender" value="man"><span>Man</span></label><label class="opt"><input type="radio" name="gender" value="nonbinary"><span>Non-binary</span></label></div><div class="phone-field"><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="Mobile number" aria-label="Mobile number"></div><label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Dating LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>. <em>[Consent wording pending attorney review.]</em></span></label>
 <label class="age"><input type="checkbox" name="age18" value="yes" required> I am 18 or older.</label>
   </form>
   <p class="fine">Free to use. First month of Idyll+ free for everyone at launch.</p>
