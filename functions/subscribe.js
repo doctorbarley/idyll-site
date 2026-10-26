@@ -27,7 +27,8 @@ export async function onRequestPost({ request, env }) {
         headers: {
           "Content-Type": "application/json",
           apikey: env.SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${env.SUPABASE_ANON_KEY}`
+          // Legacy anon keys are JWTs and need a bearer header; publishable keys (sb_publishable_...) do not.
+          ...(env.SUPABASE_ANON_KEY.startsWith("eyJ") ? { Authorization: `Bearer ${env.SUPABASE_ANON_KEY}` } : {})
         },
         body: JSON.stringify({
           p_email: emailOk ? email : null,
