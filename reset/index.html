@@ -1,0 +1,107 @@
+<!doctype html><html lang="en"><head><title>Reset your password — Idyll</title><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="referrer" content="no-referrer"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css">
+<style>
+main.doc{padding-left:20px;padding-right:20px}
+.reset-card{max-width:440px;margin-top:24px}
+.reset-card form{display:block}
+.reset-card label{display:block;font-size:15px;font-weight:500;color:var(--ink);margin:0 0 6px}
+.reset-card .field{margin-bottom:16px}
+.reset-card input[type=password],.reset-card input[type=text]{width:100%;min-height:48px;border:1px solid var(--hair);border-radius:14px;padding:0 14px;font:inherit;background:#fff;color:var(--ink)}
+.reset-card input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.reset-card button{width:100%}
+.reset-card button[disabled]{opacity:.6;cursor:default}
+.reset-card .show{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:400;color:var(--body);margin:-4px 0 18px;min-height:44px;cursor:pointer}
+.reset-card .show input{width:20px;height:20px;accent-color:var(--accent)}
+.msg{border-radius:14px;padding:12px 16px;font-size:15px;margin:0 0 16px;background:#F6DDD6;color:var(--dest)}
+[hidden]{display:none!important}
+</style></head><body>
+<header class="wrap"><a class="wordmark" href="/">idyll</a></header>
+<main class="wrap doc">
+
+<section id="view-form" hidden>
+<h1>Choose a new password</h1>
+<p>Enter a new password for your Idyll account.</p>
+<div class="card reset-card">
+<p class="msg" id="msg" role="alert" hidden></p>
+<form id="form" novalidate>
+<div class="field"><label for="pw">New password</label><input id="pw" type="password" autocomplete="new-password" required></div>
+<div class="field"><label for="pw2">Confirm new password</label><input id="pw2" type="password" autocomplete="new-password" required></div>
+<label class="show"><input id="show" type="checkbox"> Show passwords</label>
+<button id="go" type="submit">Update password</button>
+</form>
+</div>
+</section>
+
+<section id="view-done" hidden>
+<h1>Password updated.</h1>
+<p>Open Idyll on your phone and sign in with your new password.</p>
+</section>
+
+<section id="view-bad" hidden>
+<h1>This link can't be used.</h1>
+<p>Reset links work once and expire after a short time. Open Idyll, tap <b>Forgot password</b>, and we'll email you a new one.</p>
+<p>Still stuck? Email <a href="mailto:support@joinidyll.com">support@joinidyll.com</a>.</p>
+</section>
+
+<noscript><h1>Turn on JavaScript</h1><p>This page needs JavaScript to reset your password.</p></noscript>
+</main>
+<footer class="wrap">© 2026 Idyll Dating LLC · Houston, Texas · <a href="mailto:support@joinidyll.com">support@joinidyll.com</a><br><a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms of Service</a></footer>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var show = function (id) {
+    ["view-form", "view-done", "view-bad"].forEach(function (v) { $(v).hidden = v !== id; });
+  };
+
+  // Read the one-time token from the link, then remove it from the address bar and history.
+  var params = new URLSearchParams(window.location.search);
+  var tokenHash = params.get("token_hash") || "";
+  var accessToken = "";
+  try { history.replaceState(null, "", "/reset"); } catch (e) {}
+
+  if (!tokenHash) { show("view-bad"); return; }
+  show("view-form");
+
+  var msg = $("msg"), pw = $("pw"), pw2 = $("pw2"), go = $("go");
+  var say = function (text) { msg.textContent = text; msg.hidden = !text; };
+
+  $("show").addEventListener("change", function (e) {
+    pw.type = pw2.type = e.target.checked ? "text" : "password";
+  });
+
+  $("form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    say("");
+    if (pw.value.length < 6) { say("Use at least 6 characters."); pw.focus(); return; }
+    if (pw.value !== pw2.value) { say("Those passwords don't match."); pw2.focus(); return; }
+
+    go.disabled = true; go.textContent = "Updating…";
+    var body = accessToken
+      ? { access_token: accessToken, password: pw.value }
+      : { token_hash: tokenHash, password: pw.value };
+
+    fetch("/api/reset", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body)
+    })
+      .then(function (r) { return r.json().catch(function () { return { error: "server" }; }); })
+      .then(function (res) {
+        if (res.ok) { pw.value = pw2.value = ""; show("view-done"); return; }
+        if (res.error === "link_invalid") { show("view-bad"); return; }
+        if (res.error === "password_rejected") {
+          accessToken = res.access_token || accessToken;
+          say(res.message || "That password can't be used. Try a different one.");
+        } else {
+          say("Something went wrong. Please try again.");
+        }
+        go.disabled = false; go.textContent = "Update password";
+      })
+      .catch(function () {
+        say("Couldn't reach Idyll. Check your connection and try again.");
+        go.disabled = false; go.textContent = "Update password";
+      });
+  });
+})();
+</script>
+</body></html>
