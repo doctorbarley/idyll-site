@@ -161,7 +161,6 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
           <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(212) 555-0134" aria-describedby="phone-hint join-err">
           <span class="hint" id="phone-hint">US numbers only.</span>
         </div>
-        <label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Social LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>.</span></label>
       </div>
       <div class="panel" data-channel="email">
         <div class="field">
@@ -178,6 +177,9 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
         </div>
       </fieldset>
       <label class="age"><input type="checkbox" name="age18" value="yes" required> I am 18 or older.</label>
+      <div class="panel" data-channel="text">
+        <label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Social LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>.</span></label>
+      </div>
       <p class="err" id="join-err" role="alert"></p>
       <button class="btn" type="submit">Join the NYC waitlist</button>
       <p class="fine">First month of Idyll+ free at launch. iPhone only.</p>
@@ -280,14 +282,15 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
 
   form.addEventListener('submit', function (e) {
     var msg = '', focusOn = null;
-    if (channel() === 'text') {
+    var texting = channel() === 'text';
+    if (texting) {
       var d = phone.value.replace(/\D/g, '');
       if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) { msg = 'Enter a US mobile number.'; focusOn = phone; phone.setAttribute('aria-invalid', 'true'); }
-      else if (!consent.checked) { msg = 'Tick the box so we can text you.'; focusOn = consent; }
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
       msg = 'Enter your email address.'; focusOn = email; email.setAttribute('aria-invalid', 'true');
     }
     if (!msg && !age.checked) { msg = "Confirm you're 18 or older."; focusOn = age; }
+    if (!msg && texting && !consent.checked) { msg = 'Tick the box so we can text you.'; focusOn = consent; }
     if (msg) { e.preventDefault(); err.textContent = msg; focusOn.focus(); return; }
     if (btn.getAttribute('aria-busy') === 'true') { e.preventDefault(); return; }
     btn.setAttribute('aria-busy', 'true');
