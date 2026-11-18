@@ -16,7 +16,8 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--ui);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-h1,h2,h3{text-wrap:balance;margin:0}
+h1,h2,h3{text-wrap:balance;margin:0;font-variant-ligatures:none}
+.hero h1,.sec h2,.again h2{font-variation-settings:'opsz' 48}
 p{margin:0}
 .eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-body);font-weight:500}
 
@@ -34,23 +35,29 @@ p{margin:0}
 form.capture{margin-top:28px;display:flex;flex-direction:column;gap:14px;max-width:460px}
 .field{display:flex;flex-direction:column;gap:6px}
 .field-label{font-size:14px;font-weight:500;color:var(--ink-body);padding-left:20px}
-form.capture input[type=email]{width:100%;font:inherit;font-size:16px;height:54px;padding:0 20px;border-radius:999px;border:1.5px solid var(--hair);background:var(--card);color:var(--ink);transition:border-color .15s,box-shadow .15s}
-form.capture input[type=email]::placeholder{color:#8A847A}
-form.capture input[type=email]:focus{outline:none;border-color:var(--accent-strong);box-shadow:0 0 0 4px var(--accent-soft)}
+form.capture input[type=email],form.capture input[type=tel]{width:100%;font:inherit;font-size:16px;height:54px;padding:0 20px;border-radius:999px;border:1.5px solid var(--hair);background:var(--card);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+form.capture input::placeholder{color:#7A7369}
+form.capture input[type=email]:focus,form.capture input[type=tel]:focus{outline:none;border-color:var(--accent-strong);box-shadow:0 0 0 4px var(--accent-soft)}
 form.capture input[aria-invalid=true]{border-color:var(--error)}
 
 .opts{border:0;margin:0;padding:0;min-width:0}
 .opts legend{font-size:14px;font-weight:500;color:var(--ink-body);padding:0 0 6px 20px}
 .opts-row{display:flex;gap:8px}
 .opt{position:relative;flex:1}
-.opt:last-child{flex:1.3}
+.gender .opt:last-child{flex:1.3}
 .opt input{position:absolute;opacity:0;width:1px;height:1px}
 .opt span{display:flex;align-items:center;justify-content:center;height:46px;border-radius:999px;border:1.5px solid var(--hair);background:var(--card);color:var(--ink);font-size:15px;cursor:pointer;user-select:none;transition:background .15s,border-color .15s,color .15s,transform .12s}
 .opt span:active{transform:scale(.97)}
 .opt input:checked+span{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
 .opt input:focus-visible+span{box-shadow:0 0 0 4px var(--accent-soft)}
-.js form.capture .opts{display:none}
-.js form.capture.engaged .opts{display:block;animation:fadein .25s ease both}
+.js form.capture .opts.gender{display:none}
+.js form.capture.engaged .opts.gender{display:block;animation:fadein .25s ease both}
+.panel{display:flex;flex-direction:column;gap:12px}
+.panel[hidden]{display:none}
+.hint{font-size:14px;color:var(--ink-body);padding-left:20px}
+.sms{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.5;color:var(--ink-body);padding-left:4px;cursor:pointer}
+.sms input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--accent-strong);flex:none}
+.sms a{color:var(--accent-text)}
 
 .age{display:flex;gap:12px;align-items:center;min-height:44px;font-size:16px;padding-left:4px;cursor:pointer}
 .age input{width:22px;height:22px;margin:0;accent-color:var(--accent-strong);flex:none}
@@ -65,17 +72,17 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
 .err:empty{display:none}
 
 .shot{margin:0;border-radius:30px;overflow:hidden;background:var(--card);border:1px solid var(--hair);box-shadow:0 30px 60px -28px rgba(36,33,28,.32)}
-.shot img{display:block;width:100%;height:auto;will-change:transform}
-.hero .shot{width:min(340px,100%);margin-inline:auto}
+.shot img{display:block;width:100%;height:auto}
+.drift{will-change:transform}
+.hero .drift{width:min(340px,100%);margin-inline:auto}
 
 .sec{padding-block:64px}
 .sec-head{max-width:60ch;margin-bottom:40px}
 .sec h2{font-family:var(--display);font-weight:500;font-size:clamp(30px,4vw,42px);line-height:1.1;letter-spacing:-.01em;margin-top:8px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
 .step{display:flex;flex-direction:column;gap:22px}
-.step .shot{width:min(260px,100%)}
+.step .drift{width:min(260px,100%)}
 .step h3{font-family:var(--display);font-weight:500;font-size:25px;line-height:1.2}
-.step .n{color:var(--accent-strong);margin-right:8px}
 .step p{color:var(--ink-body);font-size:16px;max-width:32ch;margin-top:6px}
 
 .calm{background:var(--card);border-radius:28px;padding:48px}
@@ -124,7 +131,7 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
 @media (max-width:760px){
   .hero .wrap{grid-template-columns:1fr;gap:44px;padding-block:12px 56px}
   .hero form.capture{max-width:none}
-  .hero .shot{width:min(320px,88%)}
+  .hero .drift{width:min(320px,88%)}
   .calm{padding:32px 22px}
   .again .btn{width:100%}
 }
@@ -141,11 +148,28 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
     <h1>The date <em>comes first.</em></h1>
     <p class="lede">Post a date, not a profile. Someone nearby requests to join, you pick, and then you meet the person.</p>
     <form class="capture" id="join" method="POST" action="/subscribe" novalidate>
-      <div class="field">
-        <label class="field-label" for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" required aria-describedby="join-err">
+      <fieldset class="opts channel">
+        <legend>Send my download link by</legend>
+        <div class="opts-row">
+          <label class="opt"><input type="radio" name="channel" value="text" checked><span>Text</span></label>
+          <label class="opt"><input type="radio" name="channel" value="email"><span>Email</span></label>
+        </div>
+      </fieldset>
+      <div class="panel" data-channel="text">
+        <div class="field">
+          <label class="field-label" for="phone">Mobile number</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(212) 555-0134" aria-describedby="phone-hint join-err">
+          <span class="hint" id="phone-hint">US numbers only.</span>
+        </div>
+        <label class="sms"><input type="checkbox" name="sms_consent" value="yes"> <span>Text me when Idyll launches. By checking this box you agree to receive one launch text and up to 2 reminder texts from Idyll Social LLC at the number provided. Consent is not a condition of any purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="/privacy">Privacy Policy</a>.</span></label>
       </div>
-      <fieldset class="opts">
+      <div class="panel" data-channel="email">
+        <div class="field">
+          <label class="field-label" for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com" aria-describedby="join-err">
+        </div>
+      </div>
+      <fieldset class="opts gender">
         <legend>I am (optional)</legend>
         <div class="opts-row">
           <label class="opt"><input type="radio" name="gender" value="woman"><span>Woman</span></label>
@@ -159,7 +183,7 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
       <p class="fine">First month of Idyll+ free at launch. iPhone only.</p>
     </form>
   </div>
-  <figure class="shot"><img src="/images/discover.webp" width="720" height="1453" alt="Idyll's Discover map of lower Manhattan, showing a date spot for a coffee walk on the High Line." fetchpriority="high"></figure>
+  <div class="drift"><figure class="shot"><img src="/images/discover.webp" width="720" height="1565" alt="Idyll's Discover map of lower Manhattan, showing a date spot for a coffee walk on the High Line." fetchpriority="high"></figure></div>
 </div></section>
 
 <section class="sec"><div class="wrap">
@@ -169,16 +193,16 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
   </div>
   <div class="steps">
     <div class="step reveal">
-      <figure class="shot"><img src="/images/hosting.webp" width="720" height="1453" alt="The Hosting screen, with one active spot and one request." loading="lazy"></figure>
-      <div><h3><span class="n">1</span>Host a spot</h3><p>Pick a public place, write the idea, and post it. A spot stays up for 72 hours and takes up to 7 requests.</p></div>
+      <div class="drift"><figure class="shot"><img src="/images/hosting.webp" width="720" height="1565" alt="The Hosting screen, with one active spot and one request." loading="lazy"></figure></div>
+      <div><h3>Host a spot</h3><p>Pick a public place, write the idea, and post it. A spot stays up for 72 hours and takes up to 7 requests.</p></div>
     </div>
     <div class="step reveal">
-      <figure class="shot"><img src="/images/date-spot.webp" width="720" height="1453" alt="A date spot with the host's photos hidden, showing only the plan and a few basics." loading="lazy"></figure>
-      <div><h3><span class="n">2</span>Request to join</h3><p>See the plan and a few basics. Photos stay hidden until you use a reveal. If it sounds like your kind of day, send a request.</p></div>
+      <div class="drift"><figure class="shot"><img src="/images/date-spot.webp" width="720" height="1565" alt="A date spot with the host's photos hidden, showing only the plan and a few basics." loading="lazy"></figure></div>
+      <div><h3>Request to join</h3><p>See the plan and a few basics. Photos stay hidden until you use a reveal. If it sounds like your kind of day, send a request.</p></div>
     </div>
     <div class="step reveal">
-      <figure class="shot"><img src="/images/messages.webp" width="720" height="1453" alt="A chat that has just opened, confirming the time and place for the walk." loading="lazy"></figure>
-      <div><h3><span class="n">3</span>The host chooses</h3><p>The host picks one request. The spot closes, both profiles open up, and a chat starts with the plan already made.</p></div>
+      <div class="drift"><figure class="shot"><img src="/images/messages.webp" width="720" height="1565" alt="A chat that has just opened, confirming the time and place for the walk." loading="lazy"></figure></div>
+      <div><h3>The host chooses</h3><p>The host picks one request. The spot closes, both profiles open up, and a chat starts with the plan already made.</p></div>
     </div>
   </div>
 </div></section>
@@ -202,7 +226,7 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
 <section class="again"><div class="wrap reveal">
   <p class="eyebrow">Launching in New York City</p>
   <h2>Meet the plan before the person.</h2>
-  <a class="btn" href="#join" id="to-join">Join the NYC waitlist</a>
+  <a class="btn" href="#" id="to-top">Join the NYC waitlist</a>
   <p class="fine">Free to use. First month of Idyll+ free at launch.</p>
 </div></section>
 </main>
@@ -217,30 +241,54 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
 (function () {
   var form = document.getElementById('join');
   var email = form.querySelector('[name=email]');
+  var phone = form.querySelector('[name=phone]');
+  var consent = form.querySelector('[name=sms_consent]');
   var age = form.querySelector('[name=age18]');
   var err = document.getElementById('join-err');
   var btn = form.querySelector('button[type=submit]');
+  var panels = form.querySelectorAll('.panel');
+
+  function channel() { return form.querySelector('[name=channel]:checked').value; }
+  function showChannel() {
+    var c = channel();
+    panels.forEach(function (p) {
+      var on = p.getAttribute('data-channel') === c;
+      p.hidden = !on;
+      p.querySelectorAll('input').forEach(function (i) { i.disabled = !on; });
+    });
+  }
+  form.querySelectorAll('[name=channel]').forEach(function (r) {
+    r.addEventListener('change', function () { showChannel(); clearErr(); engage(); });
+  });
+  showChannel();
 
   function engage() { form.classList.add('engaged'); }
-  email.addEventListener('focus', engage);
-  email.addEventListener('input', engage);
-  if (email.value) engage();
+  [email, phone].forEach(function (i) {
+    i.addEventListener('focus', engage);
+    i.addEventListener('input', engage);
+    if (i.value) engage();
+  });
 
-  function clearErr() { err.textContent = ''; email.removeAttribute('aria-invalid'); }
-  email.addEventListener('input', clearErr);
-  age.addEventListener('change', clearErr);
+  function clearErr() { err.textContent = ''; email.removeAttribute('aria-invalid'); phone.removeAttribute('aria-invalid'); }
+  [email, phone].forEach(function (i) { i.addEventListener('input', clearErr); });
+  [consent, age].forEach(function (i) { i.addEventListener('change', clearErr); });
 
   if (/[?&]err=1/.test(location.search)) {
     engage();
-    err.textContent = "That didn't go through. Check your email and confirm you're 18 or older.";
+    err.textContent = "That didn't go through. Check your number or email, and confirm you're 18 or older.";
   }
 
   form.addEventListener('submit', function (e) {
-    var v = email.value.trim();
-    var msg = '';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { msg = 'Enter your email address.'; email.setAttribute('aria-invalid', 'true'); }
-    else if (!age.checked) { msg = "Confirm you're 18 or older."; }
-    if (msg) { e.preventDefault(); err.textContent = msg; (msg.indexOf('email') > -1 ? email : age).focus(); return; }
+    var msg = '', focusOn = null;
+    if (channel() === 'text') {
+      var d = phone.value.replace(/\D/g, '');
+      if (!(d.length === 10 || (d.length === 11 && d[0] === '1'))) { msg = 'Enter a US mobile number.'; focusOn = phone; phone.setAttribute('aria-invalid', 'true'); }
+      else if (!consent.checked) { msg = 'Tick the box so we can text you.'; focusOn = consent; }
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      msg = 'Enter your email address.'; focusOn = email; email.setAttribute('aria-invalid', 'true');
+    }
+    if (!msg && !age.checked) { msg = "Confirm you're 18 or older."; focusOn = age; }
+    if (msg) { e.preventDefault(); err.textContent = msg; focusOn.focus(); return; }
     if (btn.getAttribute('aria-busy') === 'true') { e.preventDefault(); return; }
     btn.setAttribute('aria-busy', 'true');
     btn.textContent = 'Joining…';
@@ -251,11 +299,12 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
     btn.textContent = 'Join the NYC waitlist';
   });
 
-  document.getElementById('to-join').addEventListener('click', function () {
-    setTimeout(function () { email.focus({ preventScroll: true }); }, 450);
-  });
-
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.getElementById('to-top').addEventListener('click', function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: still ? 'auto' : 'smooth' });
+  });
   var items = document.querySelectorAll('.reveal');
   if (still || !('IntersectionObserver' in window)) {
     items.forEach(function (el) { el.classList.add('in'); });
@@ -269,15 +318,15 @@ form.capture input[aria-invalid=true]{border-color:var(--error)}
   }
 
   if (!still) {
-    var shots = document.querySelectorAll('.shot img');
+    var shots = document.querySelectorAll('.drift');
     var ticking = false;
     function drift() {
       var vh = window.innerHeight;
       shots.forEach(function (img) {
-        var r = img.parentNode.getBoundingClientRect();
+        var r = img.getBoundingClientRect();
         if (r.bottom < 0 || r.top > vh) return;
         var t = ((r.top + r.height / 2) - vh / 2) / vh;
-        img.style.transform = 'translateY(' + (t * -14).toFixed(1) + 'px) scale(1.03)';
+        img.style.transform = 'translateY(' + (t * -14).toFixed(1) + 'px)';
       });
       ticking = false;
     }
